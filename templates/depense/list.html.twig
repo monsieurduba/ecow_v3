@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des dépenses{% endblock %}
+
+{% block body %}
+
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<form method="get" action="{{ path('depenses_list') }}">
+    <label for="date">Filtrer par date :</label>
+    <input type="date" name="date" value="{{ selectedDate }}">
+    <button type="submit">Filtrer</button>
+</form>
+<div class="nav-buttons">
+    <a href="{{ path('depense_form', { 'payer': 'Thibault', 'date': '2025-01-01' }) }}">Ajouter des dépenses</a>
+</div>
+
+<h2>Bilan des dépenses</h2>
+<table>
+    <tr>
+        <th>Utilisateur</th>
+        <th>Total dépensé</th>
+    </tr>
+    {% for summary in monthlySummary %}
+    <tr>
+        <td>{{ summary.utilisateur }}</td>
+        <td>{{ summary.total|number_format(2, ',', ' ') }} €</td>
+    </tr>
+    {% else %}
+    <tr>
+        <td colspan="2">Aucune dépense enregistrée pour ce mois.</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <th>Total général</th>
+        <th>{{ totalGeneral|number_format(2, ',', ' ') }} €</th>
+    </tr>
+</table>
+
+<h3>Répartition des dépenses</h3>
+<table>
+    <tr>
+        <th>Utilisateur</th>
+        <th>Repartition attendue</th>
+        <th>Depense réel </th>
+        <th>Ecart </th>
+    </tr>
+    <tr>
+        <td>Thibault</td>
+        <td>{{ thibaultShare|number_format(2, ',', ' ') }} €</td>
+        <td>{{ thibaultPaid|number_format(2, ',', ' ') }} €</td>
+        <td>{{ thibaultEcart|number_format(2, ',', ' ') }} €</td>
+
+    </tr>
+    <tr>
+        <td>Lisa </td>
+        <td>{{ lisaShare|number_format(2, ',', ' ') }} €</td>
+        <td>{{ lisaPaid|number_format(2, ',', ' ') }} €</td>
+        <td>{{ lisaEcart|number_format(2, ',', ' ') }} €</td>
+    </tr>
+</table>
+
+<h3>Équilibrage des comptes</h3>
+<p><strong>{{ message }}</strong></p>
+<h1>Liste des dépenses</h1>
+
+<table>
+    <tr>
+        <th>Utilisateur</th>
+        <th>Montant</th>
+        <th>Detail</th>
+        <th>Date</th>
+        <th>Actions</th>
+
+    </tr>
+    {% for depense in depenses %}
+    <tr>
+        <td>{{ depense.utilisateur }}</td>
+        <td>{{ depense.montant }} €</td>
+        <td>{{ depense.detail }}</td>
+        <td>{{ depense.date|date('d/m/Y') }}</td>
+        <td>
+            <form method="post" action="{{ path('depense_supprimer', {id: depense.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer cette dépense ?');">
+                <button type="submit">🗑️ Supprimer</button>
+            </form>
+        </td>   
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
+
+

@@ -1,0 +1,205 @@
+/* 🎨 Réinitialisation et styles globaux */
+
+
+
+
+/* 🌟 Bannière */
+.banner {
+    background: #007BFF;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* 🔘 Boutons de navigation */
+.nav-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.nav-buttons a {
+    text-decoration: none;
+    background: #28a745;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.nav-buttons a:hover {
+    background: #218838;
+}
+
+/* 🔄 Bouton retour */
+.back-button {
+    background: #dc3545 !important;
+}
+
+.back-button:hover {
+    background: #c82333 !important;
+}
+
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* 🏗️ Conteneur principal */
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 🏷️ Titres */
+h1, h2, h3 {
+    color: #444;
+    text-align: center;
+}
+
+/* 📅 Formulaire */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    background: #fafafa;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    font-weight: bold;
+}
+
+input, select, textarea {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+button {
+    background: #007BFF;
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+/* 📊 Tableau */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: white;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+th {
+    background: #007BFF;
+    color: white;
+}
+
+/* 🏷️ Message de bilan */
+.bilan {
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+    padding: 10px;
+    background: #ffeb3b;
+    border-radius: 5px;
+}
+
+/* 📱 Responsive */
+@media (max-width: 600px) {
+    .container {
+        width: 90%;
+        padding: 10px;
+    }
+
+    form {
+        gap: 5px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+}
+/* 🐄 Fond animé style peau de vache */
+body {
+    background-color: #fff; /* Fond blanc pour l'effet peau de vache */
+    background-image: radial-gradient(circle, black 10%, transparent 11%), 
+                      radial-gradient(circle, black 10%, transparent 11%);
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px;
+    animation: moveCowPrint 6s linear infinite;
+}
+
+/* 🌊 Animation pour donner un effet de mouvement */
+@keyframes moveCowPrint {
+    0% { background-position: 0 0, 25px 25px; }
+    100% { background-position: 50px 50px, 75px 75px; }
+}
+/* 🔥 Flash messages */
+.flash-message {
+    padding: 15px;
+    margin: 10px auto;
+    width: 80%;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fadeOut 4s forwards;
+}
+
+/* 🟢 Succès */
+.flash-success {
+    background-color: #28a745;
+    color: white;
+}
+
+/* 🔴 Erreur */
+.flash-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* ⏳ Animation disparition */
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    75% { opacity: 1; }
+    100% { opacity: 0; display: none; }
+}
