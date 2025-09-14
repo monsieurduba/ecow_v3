@@ -15,8 +15,11 @@
     <button type="submit">Filtrer</button>
 </form>
 <div class="nav-buttons">
-    <a href="{{ path('depense_form', { 'payer': 'Thibault', 'date': '2025-01-01' }) }}">Ajouter des dépenses</a>
+    <a href="{{ path('depense_form', { 'payer': 'Thibault', 'date': '2025-01-01' }) }}">💸 Ajouter des dépenses</a>
+    <a href="{{ path('salaire_add') }}" class="button-yellow">💰 Ajouter un salaire</a>
 </div>
+
+
 
 <h2>Bilan des dépenses</h2>
 <table>
@@ -73,8 +76,8 @@
         <th>Montant</th>
         <th>Detail</th>
         <th>Date</th>
+        <th>Perso ?</th>
         <th>Actions</th>
-
     </tr>
     {% for depense in depenses %}
     <tr>
@@ -82,6 +85,7 @@
         <td>{{ depense.montant }} €</td>
         <td>{{ depense.detail }}</td>
         <td>{{ depense.date|date('d/m/Y') }}</td>
+        <td>{{ depense.isPerso ? '✅ Oui' : '❌ Non' }}</td>
         <td>
             <form method="post" action="{{ path('depense_supprimer', {id: depense.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer cette dépense ?');">
                 <button type="submit">🗑️ Supprimer</button>

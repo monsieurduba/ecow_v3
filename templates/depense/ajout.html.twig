@@ -4,12 +4,12 @@
 
 {% block body %}
 <h1>Ajouter une dépense</h1>
+
 <form method="post">
     <label for="utilisateur">Utilisateur :</label>
     <select name="utilisateur" id="utilisateur">
         <option value="Thibault" {% if utilisateur == 'Thibault' %}selected{% endif %}>Thibault</option>
         <option value="Lisa" {% if utilisateur == 'Lisa' %}selected{% endif %}>Lisa</option>
-    </select>
     </select>
     <label for="detail">Detail :</label>
     <input type="detail" name="detail" required>
@@ -17,6 +17,19 @@
     <input type="number" step="0.01" name="montant" required>
     <label for="date">DATE :</label>
     <input type="date" name="date" value="{{ date|date('Y-m-d') }}">
+    <label for="typeDepense">Type de dépense :</label>
+    <select name="typeDepense" id="typeDepense" required>
+        {% for type in types %}
+            <option value="{{ type.id }}">{{ type.nom }}</option>
+        {% endfor %}
+    </select>
+    <div class="toggle-wrapper">
+        <label class="toggle-label">Dépense perso</label>
+        <label class="switch">
+            <input type="checkbox" name="isPerso" id="isPerso" {% if isPerso|default(false) %}checked{% endif %}>
+            <span class="slider"></span>
+        </label>
+    </div>
     <button type="submit">Ajouter</button>
 
 </form>
@@ -31,7 +44,9 @@
         <th>utilisateur</th>
         <th>Montant</th>
         <th>Détail</th>
+        <th>Type</th>
         <th>Date</th>
+        <th>Perso ?</th>
         <th>Actions</th>
     </tr>
     {% for depense in recentes_depenses %}
@@ -39,7 +54,9 @@
         <td>{{ depense.utilisateur }}</td>
         <td>{{ depense.montant }} €</td>
         <td>{{ depense.detail }}</td>
+        <td>{{ depense.type }}</td>
         <td>{{ depense.date|date('d/m/Y') }}</td>
+        <td>{{ depense.isPerso ? '✅ Oui' : '❌ Non' }}</td>
         <td>
             <form method="post" action="{{ path('depense_supprimer', {id: depense.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer cette dépense ?');">
                 <button type="submit">🗑️ Supprimer</button>

@@ -27,6 +27,13 @@ class Depense
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $Date = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?TypeDepense $type = null;
+
+    #[ORM\Column]
+    private ?bool $isPerso = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +83,30 @@ class Depense
     public function setDate(\DateTimeInterface $Date): static
     {
         $this->Date = $Date;
+
+        return $this;
+    }
+
+    public function getType(): ?TypeDepense
+    {
+        return $this->type;
+    }
+
+    public function setType(?TypeDepense $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function isPerso(): ?bool
+    {
+        return $this->isPerso;
+    }
+
+    public function setIsPerso(bool $isPerso): static
+    {
+        $this->isPerso = $isPerso;
 
         return $this;
     }
