@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Depense;
+use App\Entity\TypeDepense;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+
+use function PHPSTORM_META\type;
 
 final class DepenseController extends AbstractController
 {
@@ -111,7 +114,7 @@ final class DepenseController extends AbstractController
     {
         $utilisateur = $request->query->get('utilisateur', 'Thibault');
         $date = $request->query->get('Date', (new \DateTime())->format('Y-m-d'));
-
+        $types = $entityManager->getRepository(TypeDepense::class)->findAll();
 
         // Récupération des 5 dernières dépenses
         $recentesDepenses = $entityManager->getRepository(Depense::class)
@@ -122,20 +125,26 @@ final class DepenseController extends AbstractController
             $utilisateur = $request->request->get('utilisateur');
             $montant = (float) $request->request->get('montant');
             $detail = $request->request->get('detail');
+            $type = $request->request->get('type');
+            // ⚡ Lier le type choisi
+            $typeId = $request->request->get('typeDepense');
+            $type = $entityManager->getRepository(TypeDepense::class)->find($typeId);
             $date = new \DateTime($request->request->get('date'));
-
+            $isPerso = $request->request->getBoolean('isPerso', false);
             // Vérification des données reçues
-            if (!$utilisateur || !$montant || !$date) {
+            if (!$utilisateur || !$montant || !$type || !$date) {
                 $this->addFlash('error', 'Veuillez remplir tous les champs obligatoires.');
                 return $this->redirectToRoute('depense_ajout');
-            }
+        }
     
             // Création et enregistrement de la dépense
             $depense = new Depense();
             $depense->setUtilisateur($utilisateur);
             $depense->setMontant($montant);
             $depense->setDetail($detail);
+            $depense->setType($type);
             $depense->setDate($date);
+            $depense->setIsPerso($isPerso);
 
             $entityManager->persist($depense);
             $entityManager->flush();
@@ -153,13 +162,17 @@ final class DepenseController extends AbstractController
             return $this->render('depense/ajout.html.twig', [
                 'utilisateur' => $utilisateur,
                 'date' => $date,
+                'types' => $types,
+                'isPerso' => $depense->isPerso(),
                 'recentes_depenses' => $recentesDepenses
+
             ]);
         }
 
         return $this->render('depense/ajout.html.twig', [
             'utilisateur' => $utilisateur,
             'date' => $date,
+            'types' => $types,
             'recentes_depenses' => $recentesDepenses
         ]);
     }

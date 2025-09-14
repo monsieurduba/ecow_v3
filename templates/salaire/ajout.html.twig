@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Salaire{% endblock %}
+
+{% block body %}
+<h1>Ajouter un Salaire</h1>
+
+<form method="post" action="{{ path('salaire_add') }}">
+    <label for="utilisateur">Utilisateur :</label>
+    <select name="utilisateur" id="utilisateur">
+        <option value="Thibault">Thibault</option>
+        <option value="Lisa">Lisa</option>
+    </select>
+
+    <label for="montant">Montant :</label>
+    <input type="number" step="0.01" name="montant" id="montant" required>
+
+    <label for="date">DATE :</label>
+    <input type="date" name="date" value="{{ date|date('Y-m-d') }}">
+
+    <label for="detail">Détail :</label>
+    <textarea name="detail" id="detail"></textarea>
+
+    <button type="submit">Ajouter</button>
+</form>
+
+<div class="nav-buttons">
+    <a href="{{ path('depenses_list') }}" class="back-button">Retour à l'accueil</a>
+</div>
+
+<h2>Derniers salaires enregistrés</h2>
+<table>
+    <tr>
+        <th>Utilisateur</th>
+        <th>Montant</th>
+        <th>Date</th>
+        <th>Détail</th>
+        <th>Actions</th>
+    </tr>
+    {% for salaire in salaires %}
+    <tr>
+        <td>{{ salaire.utilisateur }}</td>
+        <td>{{ salaire.montant }} €</td>
+        <td>{{ salaire.date|date('d/m/Y') }}</td>
+        <td>{{ salaire.detail }}</td>
+        <td>
+            <form method="post" action="{{ path('salaire_delete', {id: salaire.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer ce salaire ?');">
+                <button type="submit">🗑️ Supprimer</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
