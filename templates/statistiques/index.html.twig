@@ -33,10 +33,6 @@
         datasets: [{
             label: 'Dépenses',
             data: {{ depensesParTypo|map(d => d.total)|json_encode|raw }},
-            backgroundColor: ['#ff6384','#36a2eb','#ffce56','#4bc0c0','#9966ff','#ff9f40','#4dae77ff','#28156eff','#683151ff','#25936cff','#46330eff','#94918cff','#3045e2ff','#191a1fff']
-        }]
-    };
-    new Chart(document.getElementById('depensesChart'), {
         type: 'pie',
         data: depensesData,
     });

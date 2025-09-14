@@ -45,14 +45,17 @@ final class DepenseController extends AbstractController
 
             // Récupérer les dépenses du mois sélectionné avec le total par utilisateur
             $query = $entityManager->createQuery(
-            'SELECT e.utilisateur, SUM(e.montant) as total 
-            FROM App\Entity\Depense e 
-            WHERE e.Date BETWEEN :startDate AND :endDate
-            GROUP BY e.utilisateur'
-            )->setParameters([
-                'startDate' => $start,
-                'endDate' => $end
-            ]);
+                'SELECT e.utilisateur, SUM(e.montant) as total
+                FROM App\Entity\Depense e
+                WHERE e.Date BETWEEN :startDate AND :endDate
+                AND e.isPerso = :isPerso
+                GROUP BY e.utilisateur'
+            )
+            ->setParameter('isPerso', false)
+            ->setParameter('startDate', $start)
+            ->setParameter('endDate', $end);
+
+
             $monthlySummary = $query->getResult(); 
 
             // Initialiser les montants payés par chacun
