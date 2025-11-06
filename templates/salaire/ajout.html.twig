@@ -15,8 +15,10 @@
     <label for="montant">Montant :</label>
     <input type="number" step="0.01" name="montant" id="montant" required>
 
-    <label for="date">DATE :</label>
-    
+    <label for="date">Date :</label>
+    <input type="date" name="date" value="{{ date|date('Y-m-d') }}">
+
+
     <label for="detail">Détail :</label>
     <textarea name="detail" id="detail"></textarea>
 
